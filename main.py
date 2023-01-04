@@ -1,2 +1,3 @@
-print("Hello World")
-print("Fun Fact")
+import sys
+import random
+import datetime
