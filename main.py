@@ -1,5 +1,6 @@
 import random
 import time
+import sys
 
 
 
@@ -33,7 +34,7 @@ def troops_choice(side):
         unit.append(i)
     
     while side["gold"] > 0:
-        if t >= 0:
+        if t > 0:
             time.sleep(1)
             t -= 1
             choices = random.choice(unit)
@@ -49,13 +50,67 @@ def troops_choice(side):
                 continue
             
         else:
-            fight()
             break
     return t
 
 
+def status():
+
+    print(f"Orange damage: {orange['damage']}")
+    print(f'Orange gold left: {orange["gold"]}')
+    
+    print(f"Red damage: {red['damage']}")
+    print(f'Red gold left: {red["gold"]}')
+        
+    print(f"Blue damage: {blue['damage']}")
+    print(f'Blue gold left: {blue["gold"]}')
+        
+    print(f"Yellow damage: {yellow['damage']}")
+    print(f'Yellow gold left: {yellow["gold"]}')
+    time.sleep(5)
+
+
+
 def fight():
-    print("fight")
+    status()
+
+    winner()
+
+def winner():
+
+    winning = False
+
+    if orange["points"] == 5:
+        print("Orange is the winner")
+        sys.exit()
+    if blue["points"] == 5:
+        print("Blue is the winner")
+        sys.exit()
+    if red["points"] == 5:
+        print("Red is the winner")
+        sys.exit()
+    if yellow["points"] == 5:
+        print("Yellow is the winner")
+        sys.exit()
+    else:
+        restart()
+
+    return winning
+
+def restart():
+    blue["gold"] += 50
+    red["gold"] += 50
+    yellow["gold"] += 50
+    orange["gold"] += 50
+    
+    blue["damage"] = 0
+    red["damage"] = 0
+    yellow["damage"] = 0
+    orange["damage"] = 0
+
+    main()
+
+
 
 
 def main():
@@ -76,12 +131,8 @@ def main():
 
 
 
-main()
-print(orange["damage"])
-print(orange["gold"])
-print(red["damage"])
-print(red["gold"])
-print(blue["damage"])
-print(blue["gold"])
-print(yellow["damage"])
-print(yellow["gold"])
+winning = winner()
+
+while winning == False:
+    fight()
+
