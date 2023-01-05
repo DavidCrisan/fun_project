@@ -5,10 +5,10 @@ import time
 
 
 
-orange = {"gold":50,"points":0}
-blue = {"gold":50,"points":0}
-yellow = {"gold":50,"points":0}
-red = {"gold":50,"points":0}
+orange = {"gold":50,"points":0,"damage":0}
+blue = {"gold":50,"points":0,"damage":0}
+yellow = {"gold":50,"points":0,"damage":0}
+red = {"gold":50,"points":0,"damage":0}
 
 sides = [orange,blue,yellow,red]
 
@@ -27,7 +27,6 @@ def troops_choice(side):
 
     troop_damage = []
     troop_list = []
-    fail_try = []
     t = 10
 
     for i in units:
@@ -44,50 +43,45 @@ def troops_choice(side):
                 side["gold"] -= cost
                 troop_list.append(choices)
                 troop_damage.append(damage)
+                side["damage"] = sum(troop_damage)
                 print(f"Troop list: {troop_list}")
                 print(side["gold"])
                 continue
-            else:
-                fail_try.append(choices)
-                print(f"Fail list: {fail_try}")
-                print(side["gold"])
-                continue
+            
         else:
-            main()
+            fight()
             break
-    return troop_damage
+    return t
 
 
-
+def fight():
+    print("fight")
 
 
 def main():
-    if orange["gold"] > 0:
-        orange_damage = troops_choice(orange)
-    if red["gold"] > 0:
-        red_damage = troops_choice(red)
-    if blue["gold"] > 0:
-        blue_damage = troops_choice(blue)
-    if yellow["gold"] > 0:
-        yellow_damage = troops_choice(yellow)
+    
+    o_time = troops_choice(orange)
+    if orange["gold"] > 0 and o_time > 0:
+        troops_choice(orange)
+    r_time = troops_choice(red)
+    if red["gold"] > 0  and r_time > 0:
+        troops_choice(red)
+    b_time = troops_choice(blue)
+    if blue["gold"] > 0  and b_time > 0:
+        troops_choice(blue)
+    y_time = troops_choice(yellow)
+    if yellow["gold"] > 0  and y_time > 0:
+        troops_choice(yellow)
 
-    return orange_damage,red_damage,blue_damage,yellow_damage
 
 
-orange_damage, red_damage, blue_damage, yellow_damage = main()
-orange_bp = sum(orange_damage)
-print(orange_bp)
-# print(troop_list)
+
+main()
+print(orange["damage"])
 print(orange["gold"])
-red_bp = sum(red_damage)
-print(red_bp)
-# print(troop_list)
+print(red["damage"])
 print(red["gold"])
-blue_bp = sum(blue_damage)
-print(blue_bp)
-# print(troop_list)
+print(blue["damage"])
 print(blue["gold"])
-yellow_bp = sum(yellow_damage)
-print(yellow_bp)
-# print(troop_list)
+print(yellow["damage"])
 print(yellow["gold"])
