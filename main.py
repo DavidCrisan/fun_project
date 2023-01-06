@@ -95,21 +95,21 @@ def fight():
                 continue
             else:
                 choice_2["damage"] = choice_2["damage"] - choice["damage"]
-                choice["gold"] += 20
+                choice["gold"] += 10
                 win_2 = choice_2
                 continue
     if len(sides) == 0:
         if win_1["damage"] > win_2["damage"]:
             win_1["points"] += 1
-            win_1["gold"] += 50
-            win_2["gold"] += 30
+            win_1["gold"] += 20
+            win_2["gold"] += 15
             print(f"The winner of the round is {win_1['tag']}.")
             print(f"{win_1['tag']} score is {win_1['points']}.")
             time.sleep(10)
         if win_2["damage"] > win_1["damage"]:
             win_2["points"] += 1
-            win_2["gold"] += 50
-            win_1["gold"] += 30
+            win_2["gold"] += 20
+            win_1["gold"] += 15
             print(f"The winner of the round is {win_2['tag']}.")
             print(f"{win_2['tag']} score is {win_2['points']}.")
             time.sleep(10)
