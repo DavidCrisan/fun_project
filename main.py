@@ -3,27 +3,23 @@ import time
 import sys
 
 
-
-
-
+# Creating the side
 orange = {"gold":0,"points":0,"damage":0,"tag":"Orange"}
 blue = {"gold":0,"points":0,"damage":0,"tag":"Blue"}
 yellow = {"gold":0,"points":0,"damage":0,"tag":"Yellow"}
 red = {"gold":0,"points":0,"damage":0,"tag":"Red"}
-
 sides = []
-round_gold = 50
-score_board = [orange["points"],blue["points"],yellow["points"],red["points"]]
 
+# Creating the units
 units = {"soldier":{"cost":5,"damage":5},
         "spearman":{"cost":10,"damage":20},
         "shilder":{"cost":20,"damage":40},
         "archer":{"cost":30,"damage":60},
         "magician":{"cost":40,"damage":100}
         }
-
 unit = []
 
+# Function that randomly choose units for eac sides and calculate their damage
 def troops_choice(side):
 
     troop_damage = []
@@ -53,22 +49,19 @@ def troops_choice(side):
             break
     return t
 
-
+# Function that prints the status of each side
 def status():
 
     print(f'Orange status. Damage: {orange["damage"]}, gold: {orange["gold"]}, points:{orange["points"]}')
     print(f'Blue status. Damage: {blue["damage"]}, gold: {blue["gold"]}, points:{blue["points"]}')
     print(f'Red status. Damage: {red["damage"]}, gold: {red["gold"]}, points:{red["points"]}')
     print(f'Yellow status. Damage: {yellow["damage"]}, gold: {yellow["gold"]}, points:{yellow["points"]}')
-    
     time.sleep(5)
 
-
-
+# Function that randomly choose the opponents, give the gold after each fight and decide the winner of the round
 def fight():
 
     status()
-
     sides = [orange,blue,yellow,red]
 
     while len(sides) > 0:
@@ -116,6 +109,7 @@ def fight():
 
     winner()
 
+# Function that decides if there is a game winner or if the game continues
 def winner():
 
     winning = False
@@ -137,6 +131,7 @@ def winner():
 
     return winning
 
+# Function that sets give the same ammount of gold to each side and sets the damage to zero
 def start():
     blue["gold"] += 50
     red["gold"] += 50
@@ -150,9 +145,7 @@ def start():
 
     main()
 
-
-
-
+# The function that starts the troop_choice function
 def main():
     
     o_time = troops_choice(orange)
@@ -169,10 +162,7 @@ def main():
         troops_choice(yellow)
 
 
-
-
 winning = winner()
-
 while winning == False:
     fight()
 
