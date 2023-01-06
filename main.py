@@ -6,14 +6,14 @@ import sys
 
 
 
-orange = {"gold":50,"points":0,"damage":0}
-blue = {"gold":50,"points":0,"damage":0}
-yellow = {"gold":50,"points":0,"damage":0}
-red = {"gold":50,"points":0,"damage":0}
+orange = {"gold":0,"points":0,"damage":0,"tag":"Orange"}
+blue = {"gold":0,"points":0,"damage":0,"tag":"Blue"}
+yellow = {"gold":0,"points":0,"damage":0,"tag":"Yellow"}
+red = {"gold":0,"points":0,"damage":0,"tag":"Red"}
 
-sides = [orange,blue,yellow,red]
-
+sides = []
 round_gold = 50
+score_board = [orange["points"],blue["points"],yellow["points"],red["points"]]
 
 units = {"soldier":{"cost":5,"damage":5},
         "spearman":{"cost":10,"damage":20},
@@ -36,7 +36,7 @@ def troops_choice(side):
     while side["gold"] > 0:
         if t > 0:
             time.sleep(1)
-            t -= 1
+            t -= 2
             choices = random.choice(unit)
             cost = units[choices]["cost"]
             damage = units[choices]["damage"]
@@ -56,23 +56,63 @@ def troops_choice(side):
 
 def status():
 
-    print(f"Orange damage: {orange['damage']}")
-    print(f'Orange gold left: {orange["gold"]}')
+    print(f'Orange status. Damage: {orange["damage"]}, gold: {orange["gold"]}, points:{orange["points"]}')
+    print(f'Blue status. Damage: {blue["damage"]}, gold: {blue["gold"]}, points:{blue["points"]}')
+    print(f'Red status. Damage: {red["damage"]}, gold: {red["gold"]}, points:{red["points"]}')
+    print(f'Yellow status. Damage: {yellow["damage"]}, gold: {yellow["gold"]}, points:{yellow["points"]}')
     
-    print(f"Red damage: {red['damage']}")
-    print(f'Red gold left: {red["gold"]}')
-        
-    print(f"Blue damage: {blue['damage']}")
-    print(f'Blue gold left: {blue["gold"]}')
-        
-    print(f"Yellow damage: {yellow['damage']}")
-    print(f'Yellow gold left: {yellow["gold"]}')
     time.sleep(5)
 
 
 
 def fight():
+
     status()
+
+    sides = [orange,blue,yellow,red]
+
+    while len(sides) > 0:
+        choice = random.choice(sides)
+        sides.remove(choice)
+        choice_2 = random.choice(sides)
+        sides.remove(choice_2)
+        if len(sides) == 2:
+            if choice["damage"] > choice_2["damage"]:
+                choice["damage"] = choice["damage"] - choice_2["damage"]
+                choice_2["gold"] += 20
+                win_1 = choice
+                continue
+            else:
+                choice_2["damage"] = choice_2["damage"] - choice["damage"]
+                choice["gold"] += 20
+                win_1 = choice_2
+                continue
+        if len(sides) == 0:
+            if choice["damage"] > choice_2["damage"]: 
+                choice["damage"] = choice["damage"] - choice_2["damage"]
+                choice_2["gold"] += 20
+                win_2 = choice
+                continue
+            else:
+                choice_2["damage"] = choice_2["damage"] - choice["damage"]
+                choice["gold"] += 20
+                win_2 = choice_2
+                continue
+    if len(sides) == 0:
+        if win_1["damage"] > win_2["damage"]:
+            win_1["points"] += 1
+            win_1["gold"] += 50
+            win_2["gold"] += 30
+            print(f"The winner of the round is {win_1['tag']}.")
+            print(f"{win_1['tag']} score is {win_1['points']}.")
+            time.sleep(10)
+        if win_2["damage"] > win_1["damage"]:
+            win_2["points"] += 1
+            win_2["gold"] += 50
+            win_1["gold"] += 30
+            print(f"The winner of the round is {win_2['tag']}.")
+            print(f"{win_2['tag']} score is {win_2['points']}.")
+            time.sleep(10)
 
     winner()
 
@@ -93,11 +133,11 @@ def winner():
         print("Yellow is the winner")
         sys.exit()
     else:
-        restart()
+        start()
 
     return winning
 
-def restart():
+def start():
     blue["gold"] += 50
     red["gold"] += 50
     yellow["gold"] += 50
