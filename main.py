@@ -41,7 +41,7 @@ def troops_choice(side):
                 troop_list.append(choices)
                 troop_damage.append(damage)
                 side["damage"] = sum(troop_damage)
-                print(f"Troop list: {troop_list}")
+                print(f"{side['tag']} Troop list: {troop_list}")
                 print(side["gold"])
                 continue
             
@@ -70,6 +70,7 @@ def fight():
         choice_2 = random.choice(sides)
         sides.remove(choice_2)
         if len(sides) == 2:
+            print(f"{choice['tag']}-{choice['damage']} vs {choice_2['tag']}-{choice_2['damage']}")
             if choice["damage"] > choice_2["damage"]:
                 choice["damage"] = choice["damage"] - choice_2["damage"]
                 choice_2["gold"] += 20
@@ -81,6 +82,8 @@ def fight():
                 win_1 = choice_2
                 continue
         if len(sides) == 0:
+            print(f"{choice['tag']}-{choice['damage']} vs {choice_2['tag']}-{choice_2['damage']}")
+            time.sleep(5)
             if choice["damage"] > choice_2["damage"]: 
                 choice["damage"] = choice["damage"] - choice_2["damage"]
                 choice_2["gold"] += 20
@@ -92,6 +95,7 @@ def fight():
                 win_2 = choice_2
                 continue
     if len(sides) == 0:
+        print(f"{win_1['tag']}-{win_1['damage']} vs {win_2['tag']}-{win_2['damage']}")
         if win_1["damage"] > win_2["damage"]:
             win_1["points"] += 1
             win_1["gold"] += 20
